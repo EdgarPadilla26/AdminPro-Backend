@@ -9,19 +9,19 @@ const servidor = express();
 //configurar cors
 servidor.use(cors());
 
-//Base de datos
+//Lectura body (post)
+servidor.use(express.json());
 
+
+//Base de datos
 dbConnect();
 
 //UserMongo
 //Password a3zHk7EIWqzGziBj
 
 //Rutas
-servidor.listen( process.env.PORT, () => console.log("levantado " + process.env.PORT));
 
-servidor.get('/', (req, resp)=>{
-    resp.json({
-        ok: true,
-        cadeda: "simon que si",
-    }); 
-});
+servidor.use('/api/usuario', require('./routes/usuarioRoute'));
+servidor.use('/api/auth', require('./routes/authRoute'));
+
+servidor.listen( process.env.PORT, () => console.log("levantado " + process.env.PORT));
