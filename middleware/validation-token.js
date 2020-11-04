@@ -13,7 +13,6 @@ const validarToken = (req, resp = response , next)=>{
         });
     }
 
-
     try {
 
         const uid = jwt.verify(token, process.env.JWT_KEY);
@@ -21,7 +20,8 @@ const validarToken = (req, resp = response , next)=>{
         next();
         
     } catch (error) {
-
+        
+        console.log(error);
         return resp.status(401).json({
             ok: false,
             msg: 'No estas autorizado (token invalido)',

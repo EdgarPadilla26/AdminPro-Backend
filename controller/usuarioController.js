@@ -8,11 +8,19 @@ const {crearJwt} = require('../helpers/jwt');
 
 const getUsuarios = async(req, resp = response)=>{
 
-    const usuarios = await Usuario.find({}, 'nombre email google rol');
+    const desde = Number(req.query.desde) || 0;
+    console.log(desde);
+    const [usuarios, total] = await Promise.all([
+        Usuario.find({}, 'nombre email google rol img')
+        .skip(desde)
+        .limit(5),
+        Usuario.countDocuments()
+    ]);
 
     resp.json({
         ok: true,
         usuarios,
+        total
     }); 
 }
 
@@ -41,7 +49,7 @@ const crearUsuarios = async(req, resp = response)=>{
 
         //TOKEN
 
-        const token = await crearJwt(nuevoUsuario.id, nuevoUsuario.nombre);
+        const token = await crearJwt(nuevoUsuario.id);
 
         resp.json({
             ok: true,

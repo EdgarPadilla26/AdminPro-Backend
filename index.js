@@ -23,5 +23,9 @@ dbConnect();
 
 servidor.use('/api/usuario', require('./routes/usuarioRoute'));
 servidor.use('/api/auth', require('./routes/authRoute'));
+servidor.use('/api/hospital', require('./routes/hospitalRoute'));
+servidor.use('/api/medico', require('./routes/medicoRoute'));
+servidor.use('/api/busqueda', require('./routes/busquedaRoute'));
+servidor.use('/api/subirarchivo', require('./routes/subirArchivoRoute'));
 
-servidor.listen( process.env.PORT, () => console.log("levantado " + process.env.PORT));
+servidor.listen( process.env.PORT, () => console.log("levantado " + process.env.PORT));     
