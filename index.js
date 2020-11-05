@@ -16,8 +16,16 @@ servidor.use(express.json());
 //Base de datos
 dbConnect();
 
-//UserMongo
-//Password a3zHk7EIWqzGziBj
+//Publico 
+servidor.use(express.static('public'));
+
+/*UserMongo
+Password a3zHk7EIWqzGziBj*/
+
+/* 
+879393218755-vc1jr2sdrr6felt1an513bhkf37smu20.apps.googleusercontent.com //Client ID
+0I0gwsHycvBzhvDVzCD7tIzj //Secret ID
+*/ 
 
 //Rutas
 
