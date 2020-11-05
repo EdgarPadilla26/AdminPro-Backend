@@ -24,12 +24,17 @@ router.post('/',
 
 router.put('/:id', 
     [
+        validarToken,
+        check('nombre', 'No se ha capturado el nombre').not().isEmpty(),
+        check('idhospital', 'No es un ID valido').isMongoId(),
+        validar
     ],
     updateMedico,
 );
 
 router.delete('/:id',
     [
+        validarToken,
     ], 
     deleteMedico,
 );

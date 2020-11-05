@@ -3,7 +3,8 @@ const {Router} = require('express');
 const {check} = require('express-validator');
 
 const {validar} = require('../middleware/validations');
-const {login, loginGoogle} = require('../controller/authControllers');
+const {login, loginGoogle, refreshToken} = require('../controller/authControllers');
+const { validarToken } = require('../middleware/validation-token');
 
 const router = Router();
 
@@ -24,5 +25,11 @@ router.post('/google',
     loginGoogle
 );
 
+router.get('/refresh', 
+    [
+        validarToken
+    ],
+    refreshToken
+);
 
 module.exports = router;

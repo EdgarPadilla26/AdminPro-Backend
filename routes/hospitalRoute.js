@@ -23,12 +23,16 @@ router.post('/',
 
 router.put('/:id', 
     [
+        validarToken,
+        check('nombre', 'No se coloco nombre de hospital').not().isEmpty(),
+        validar,
     ],
     updateHospital,
 );
 
 router.delete('/:id',
     [
+        validarToken
     ], 
     deleteHospital,
 );
