@@ -93,11 +93,15 @@ const loginGoogle = async(req, resp = response)=>{
 const refreshToken = async (req, resp = response) =>{
 
     const {uid} = req.uid;
+
+    const usuario = await Usuario.findById(uid);
+
     //TOKEN
     const token = await crearJwt(uid);
     resp.json({
         ok: true,
-        token
+        token,
+        usuario
     });
 }
 module.exports = {

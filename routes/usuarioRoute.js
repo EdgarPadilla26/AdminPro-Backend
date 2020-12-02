@@ -11,9 +11,9 @@ const router = Router();
 
 router.get('/', validarToken ,getUsuarios);
 
-router.post('/', 
+router.post('/',
     [
-        validarToken,
+	
         check('nombre', 'no se capturo el nombre').not().isEmpty(),
         check('password', 'no se capturo el password').not().isEmpty(),
         check('email', 'no se capturo el email').isEmail(),
@@ -23,10 +23,10 @@ router.post('/',
 );
 
 
-router.put('/:id', 
+router.put('/:id',
     [
         validarToken,
-        check('password', 'no se capturo el password').not().isEmpty(),
+        check('nombre', 'no se capturo el nombre').not().isEmpty(),
         check('email', 'no se capturo el email').isEmail(),
         validar,
     ],
@@ -36,7 +36,7 @@ router.put('/:id',
 router.delete('/:id',
     [
         validarToken
-    ], 
+    ],
     deleteUsuario,
 );
 
