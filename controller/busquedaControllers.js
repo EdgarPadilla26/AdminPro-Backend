@@ -37,6 +37,7 @@ const getBusquedaColeccion = async(req, resp = response)=>{
 
     const tabla = req.params.tabla;
     const search = req.params.search;
+    
     const regex = new RegExp(search, 'i');
     let data = [];
 
@@ -78,6 +79,7 @@ const getBusquedaColeccion = async(req, resp = response)=>{
         }); 
     }
 }
+
 
 module.exports = {
     getBusqueda,

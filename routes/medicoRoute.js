@@ -5,7 +5,7 @@ const { check } = require('express-validator');
 
 const {validar} = require('../middleware/validations');
 const {validarToken} = require('../middleware/validation-token');
-const { getMedicos, crearMedico, updateMedico, deleteMedico } = require('../controller/medicoControllers');
+const { getMedicos, crearMedico, updateMedico, deleteMedico, medicoId } = require('../controller/medicoControllers');
 
 const router = Router();
 
@@ -26,7 +26,7 @@ router.put('/:id',
     [
         validarToken,
         check('nombre', 'No se ha capturado el nombre').not().isEmpty(),
-        check('idhospital', 'No es un ID valido').isMongoId(),
+        check('nombrehospital', 'No es un ID valido').isMongoId(),
         validar
     ],
     updateMedico,
@@ -39,4 +39,10 @@ router.delete('/:id',
     deleteMedico,
 );
 
+router.get('/:id',
+    [
+        validarToken,
+    ], 
+    medicoId,
+);
 module.exports = router;

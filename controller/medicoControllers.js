@@ -16,12 +16,19 @@ const crearMedico = async(req, resp = response)=>{
 
     const { uid } = req.uid;
     const nombrehospital = req.body.nombrehospital; 
-
-    console.log(nombrehospital);
+    const {nombre} = req.body;
     
     const medico = new Medico({hospital: nombrehospital, usuario: uid, ...req.body});
 
     try {
+
+        const medicoDB = await Medico.findOne({nombre});
+        if(medicoDB){
+            return resp.status(400).json({
+                ok: false,
+                msg: 'Ya existe un medico con ese nombre',
+            });
+        }
         const nuevoMedico = await medico.save();
 
         resp.json({
@@ -40,7 +47,7 @@ const crearMedico = async(req, resp = response)=>{
 const updateMedico = async(req, resp = response)=>{
 
     const idmed = req.params.id;
-    const idhosp = req.body.idhospital;
+    const idhosp = req.body.nombrehospital;
     const {uid} = req.uid;
 
     try {
@@ -103,10 +110,40 @@ const deleteMedico = async(req, resp = response)=>{
     }
 }
 
+const medicoId = async (req, resp = response)=>{
+
+    const uid = req.params.id;
+    
+    try {
+
+        const medicoDB = await Medico.findById(uid).populate('usuario', 'nombre').populate('hospital', 'nombre');
+
+        if(!medicoDB){
+            return resp.status(404).json({
+                ok: false,
+                msg: 'No se encuetra el medico con ese ID',
+            });    
+        }
+
+        resp.json({
+            ok: true,
+            medicoDB,
+        }); 
+        
+    } catch (error) {
+        console.log(error);
+        resp.status(500).json({
+            ok: false,
+            msg: 'Se produjo un error',
+        });
+    }
+}
+
 
 module.exports = {
     getMedicos,
     crearMedico,
     updateMedico,
     deleteMedico,
+    medicoId,
 }

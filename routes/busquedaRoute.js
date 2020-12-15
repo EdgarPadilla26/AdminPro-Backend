@@ -5,7 +5,7 @@ const {check} = require('express-validator');
 
 const {validar} = require('../middleware/validations');
 const {validarToken} = require('../middleware/validation-token');
-const{ getBusqueda, getBusquedaColeccion } = require('../controller/busquedaControllers');
+const{ getBusqueda, getBusquedaColeccion, } = require('../controller/busquedaControllers');
 
 const router = Router();
 
@@ -22,5 +22,7 @@ router.get('/coleccion/:tabla/:search',
     ],
     getBusquedaColeccion
 );
+
+
 
 module.exports = router;
