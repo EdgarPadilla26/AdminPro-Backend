@@ -4,7 +4,7 @@ const {Router} = require('express');
 const { check } = require('express-validator');
 
 const {validar} = require('../middleware/validations');
-const {validarToken} = require('../middleware/validation-token');
+const {validarToken, validarRol, validarRolMismo} = require('../middleware/validation-token');
 const { getUsuarios, crearUsuarios, updateUsuario, deleteUsuario } = require('../controller/usuarioController');
 
 const router = Router();
@@ -26,6 +26,7 @@ router.post('/',
 router.put('/:id',
     [
         validarToken,
+        validarRolMismo,
         check('nombre', 'no se capturo el nombre').not().isEmpty(),
         check('email', 'no se capturo el email').isEmail(),
         validar,
@@ -35,7 +36,8 @@ router.put('/:id',
 
 router.delete('/:id',
     [
-        validarToken
+        validarToken,
+        validarRol
     ],
     deleteUsuario,
 );

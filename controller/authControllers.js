@@ -3,7 +3,8 @@ const bcrypt = require('bcryptjs');
 
 const Usuario = require('../models/usuario');
 const { crearJwt } = require('../helpers/jwt');
-const {verify} = require('../helpers/googleSign')
+const {verify} = require('../helpers/googleSign');
+const { getMenu } = require('../helpers/menuFront');
 
 const login = async(req, resp = response)=>{
 
@@ -36,6 +37,7 @@ const login = async(req, resp = response)=>{
         resp.json({
             ok: true,
             token,
+            menu: getMenu(usuarioDB.rol),
         }); 
 
     } catch (error) {
@@ -77,9 +79,10 @@ const loginGoogle = async(req, resp = response)=>{
         const token = await crearJwt(usuario.id);
         resp.json({
             ok: true,
-            token
+            token,
+            menu: getMenu(usuario.rol),
         });
-
+        
 
     } catch (error) {
         console.log(error);
@@ -101,7 +104,8 @@ const refreshToken = async (req, resp = response) =>{
     resp.json({
         ok: true,
         token,
-        usuario
+        usuario,
+        menu: getMenu(usuario.rol),
     });
 }
 module.exports = {
