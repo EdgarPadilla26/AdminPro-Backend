@@ -1,5 +1,6 @@
 const express = require('express');
 const { dbConnect } = require('./DB/config'); 
+const path = require('path');
 const cors = require('cors');
 require('dotenv').config();
 
@@ -35,5 +36,10 @@ servidor.use('/api/hospital', require('./routes/hospitalRoute'));
 servidor.use('/api/medico', require('./routes/medicoRoute'));
 servidor.use('/api/busqueda', require('./routes/busquedaRoute'));
 servidor.use('/api/subirarchivo', require('./routes/subirArchivoRoute'));
+
+//Default
+servidor.get('*',(req, resp)=>{
+    resp.sendFile( path.resolve(__dirname, 'public/index.html') );
+});
 
 servidor.listen( process.env.PORT, () => console.log("levantado " + process.env.PORT));     
